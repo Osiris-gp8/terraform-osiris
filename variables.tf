@@ -39,8 +39,12 @@ variable "localdestCIDRblock" {
 }
 
 # Security Group
-variable "sgCIDRblock" {
-    default = "0.0.0.0/0"
+variable "sgCidrBlocks" {
+    default = ["0.0.0.0/0"]
+}
+
+variable "sgIPV6CidrBlocks" {
+    default = ["::/0"]
 }
 
 # Instâncias EC2
