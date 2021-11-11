@@ -37,3 +37,25 @@ variable "publicdestCIDRblock" {
 variable "localdestCIDRblock" {
     default = "10.0.0.0/23"
 }
+
+# Security Group
+variable "sgCIDRblock" {
+    default = "0.0.0.0/0"
+}
+
+# Instâncias EC2
+variable "amiHASH" {
+    default = "ami-083654bd07b5da81d"
+}
+
+variable "instanceTypeMicro" {
+    default = "t2.micro"
+}
+
+variable "instanceTypeMedium" {
+    default = "t2.medium"
+}
+
+variable "keyName" {
+    default = "chave-teste"
+}
