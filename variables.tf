@@ -56,10 +56,10 @@ variable "instanceTypeMicro" {
     default = "t2.micro"
 }
 
-variable "instanceTypeMedium" {
-    default = "t2.medium"
+variable "instanceTypeSmall" {
+    default = "t2.small"
 }
 
 variable "keyName" {
-    default = "chave-teste"
+    default = "osiris-terraform"
 }

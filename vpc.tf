@@ -1,64 +1,65 @@
 # VPC
-resource "aws_vpc" "VPC_teste" {
+resource "aws_vpc" "vpc_osiris" {
     cidr_block           = var.vpcCIDRblock
     instance_tenancy     = var.instanceTenancy 
     enable_dns_support   = var.dnsSupport 
     enable_dns_hostnames = var.dnsHostNames
 
     tags = {
-        Name = "VPC teste"
+        Name = "vpc-osiris"
     }
 } 
 
 # Subnet
-resource "aws_subnet" "public_subnet_teste" {
-    vpc_id                  = aws_vpc.VPC_teste.id
+resource "aws_subnet" "public_subnet_osiris" {
+    vpc_id                  = aws_vpc.vpc_osiris.id
     cidr_block              = var.publicsCIDRblock
     map_public_ip_on_launch = var.mapPublicIP 
     availability_zone       = var.availabilityZone
 
     tags = {
-        Name = "public-subnet-teste"
+        Name = "public-subnet-osiris"
     }
 }
-resource "aws_subnet" "private_subnet_teste" {
-    vpc_id                  = aws_vpc.VPC_teste.id
+
+resource "aws_subnet" "private_subnet_osiris" {
+    vpc_id                  = aws_vpc.vpc_osiris.id
     cidr_block              = var.privatesCIDRblock
     map_public_ip_on_launch = var.mapPublicIP 
     availability_zone       = var.availabilityZone
 
     tags = {
-        Name = "private-subnet-teste"
+        Name = "private-subnet-osiris"
     }
 }
 
 # Internet Gateway
-resource "aws_internet_gateway" "IGW_teste" {
-    vpc_id = aws_vpc.VPC_teste.id
+resource "aws_internet_gateway" "igw_osiris" {
+    vpc_id = aws_vpc.vpc_osiris.id
     tags = {
-        Name = "Internet gateway teste"
+        Name = "internet-gateway-osiris"
     }
 }
 
 # Route Table
-resource "aws_route_table" "Public_RT" {
-    vpc_id = aws_vpc.VPC_teste.id
+resource "aws_route_table" "rtb_osiris" {
+    vpc_id = aws_vpc.vpc_osiris.id
     tags = {
-        Name = "Public Route table"
+        Name = "route-table-osiris"
     }
 }
 
 # Rota para o Internet Gateway
 resource "aws_route" "internet_access" {
-    route_table_id         = aws_route_table.Public_RT.id
+    route_table_id         = aws_route_table.rtb_osiris.id
     destination_cidr_block = var.publicdestCIDRblock
-    gateway_id             = aws_internet_gateway.IGW_teste.id
+    gateway_id             = aws_internet_gateway.igw_osiris.id
 }
 
 # Associação da Route Table à subnet pública
-resource "aws_route_table_association" "Public_association" {
-    subnet_id      = aws_subnet.public_subnet_teste.id
-    route_table_id = aws_route_table.Public_RT.id
+resource "aws_route_table_association" "public_association" {
+    subnet_id      = aws_subnet.public_subnet_osiris.id
+    route_table_id = aws_route_table.rtb_osiris.id
 }
 
 # Security Group
@@ -66,7 +67,7 @@ resource "aws_security_group" "ssh" {
     name = "ssh"
     description = "SSH"
 
-    vpc_id = aws_vpc.VPC_teste.id
+    vpc_id = aws_vpc.vpc_osiris.id
 
     ingress = [
         {
@@ -91,7 +92,7 @@ resource "aws_security_group" "http-https" {
     name = "http-https"
     description = "aplicacao"
 
-    vpc_id = aws_vpc.VPC_teste.id
+    vpc_id = aws_vpc.vpc_osiris.id
 
     ingress = [
         {
@@ -127,7 +128,7 @@ resource "aws_security_group" "database" {
     name = "database"
     description = "banco"
 
-    vpc_id = aws_vpc.VPC_teste.id
+    vpc_id = aws_vpc.vpc_osiris.id
 
     ingress = [
         {
