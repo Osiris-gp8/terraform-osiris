@@ -56,10 +56,10 @@ variable "instanceTypeMicro" {
     default = "t2.micro"
 }
 
-variable "instanceTypeSmall" {
-    default = "t2.small"
+variable "instanceTypeMedium" {
+    default = "t2.medium"
 }
 
 variable "keyName" {
-    default = "NOME_DA_CHAVE"
+    default = "chave-teste"
 }
