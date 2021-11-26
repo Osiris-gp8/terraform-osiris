@@ -6,10 +6,11 @@ resource "aws_instance" "web_server" {
     subnet_id           = aws_subnet.public_subnet_osiris.id
     vpc_security_group_ids = [
         aws_security_group.http-https.id,
-        aws_security_group.ssh.id
+        aws_security_group.ssh.id,
+        aws_default_security_group.default.id
     ]
 
-    user_data           = file("configure.sh")
+    user_data           = file("configuracoes/configure.sh")
 
     tags = {
         Name            = "web-server"
@@ -33,10 +34,11 @@ resource "aws_instance" "back_server" {
     subnet_id           = aws_subnet.private_subnet_osiris.id
     vpc_security_group_ids = [
         aws_security_group.http-https.id,
-        aws_security_group.ssh.id
+        aws_security_group.ssh.id,
+        aws_default_security_group.default.id
     ]
 
-    user_data           = file("configure.sh")
+    user_data           = file("configuracoes/configure.sh")
 
     tags = {
         Name            = "back-server"
@@ -60,10 +62,11 @@ resource "aws_instance" "database" {
     subnet_id           = aws_subnet.private_subnet_osiris.id
     vpc_security_group_ids = [
         aws_security_group.database.id,
-        aws_security_group.ssh.id
+        aws_security_group.ssh.id,
+        aws_default_security_group.default.id
     ]
 
-    user_data           = file("configure.sh")
+    user_data           = file("configuracoes/configure-database.sh")
 
     tags = {
         Name            = "database"

@@ -148,3 +148,42 @@ resource "aws_security_group" "database" {
         Name = "database"
     }
 }
+
+resource "aws_default_security_group" "default" {
+    # name = "default"
+    # description = "default"
+
+    vpc_id = aws_vpc.vpc_osiris.id
+
+    ingress = [
+        {
+            description = "default"
+            from_port = 0
+            to_port   = 0
+            protocol  = "-1"
+            cidr_blocks = var.sgCidrBlocks
+            ipv6_cidr_blocks = var.sgIPV6CidrBlocks
+            prefix_list_ids = []
+            security_groups = []
+            self = true
+        }
+    ]
+
+    egress = [
+        {
+            description = "default"
+            from_port   = 0
+            to_port     = 0
+            protocol    = "-1"
+            cidr_blocks = var.sgCidrBlocks
+            ipv6_cidr_blocks = var.sgIPV6CidrBlocks
+            prefix_list_ids = []
+            security_groups = []
+            self = false 
+        }
+    ]
+
+    tags = {
+        Name = "database"
+    }
+}
